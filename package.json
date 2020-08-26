@@ -10,8 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@webcomponents/custom-elements": "^1.3.0",
-    "core-js": "3"
   },
   "prettier": {
     "printWidth": 180,
