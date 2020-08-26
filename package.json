@@ -4,36 +4,41 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "webpack-dev-server --config webpack/webpack.config.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "webpack-dev-server --config webpack/webpack.dev.js",
+    "serve:dist": "webpack-dev-server --config webpack/webpack.prod.js",
+    "build": "webpack --config webpack/webpack.prod.js --profile --json > stats.json",
+    "analyze": "npx webpack-bundle-analyzer stats.json"
   },
-  "author": "",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/marcinmilewicz/microapp-shell.git"
+  },
+  "author": "Marcin Milewicz",
   "license": "ISC",
-  "dependencies": {
-  },
-  "prettier": {
-    "printWidth": 180,
-    "singleQuote": true,
-    "useTabs": true,
-    "endOfLine": "auto"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
-    "babel-loader": "^8.0.6",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
     "autoprefixer": "^9.7.1",
+    "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.8.0",
-    "copy-webpack-plugin": "^5.0.4",
     "node-sass": "^4.13.0",
     "postcss-loader": "^3.0.0",
+    "querystring": "^0.2.0",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.1.2"
   }
 }

@@ -1,4 +1,4 @@
-import * as renderer from './../renderer';
+import * as renderer from '../renderer';
 import './header.scss';
 
 const header = document.createElement('div');
@@ -17,74 +17,74 @@ header.innerHTML = `
 `;
 
 customElements.define(
-	'shell-header',
-	class extends HTMLElement {
-		constructor() {
-			super();
+  'shell-header',
+  class extends HTMLElement {
+    constructor() {
+      super();
 
-			if (!this.shadowRoot) {
-				this.attachShadow({ mode: 'open' });
-			}
+      if (!this.shadowRoot) {
+        this.attachShadow({ mode: 'open' });
+      }
 
-			this.shadowRoot.appendChild(header.cloneNode(true));
+      this.shadowRoot.appendChild(header.cloneNode(true));
 
-			this._configuration = [];
-		}
+      this._configuration = [];
+    }
 
-		set configuration(value) {
-			this._configuration = value;
-		}
+    set configuration(value) {
+      this._configuration = value;
+    }
 
-		get configuration() {
-			return this._configuration;
-		}
+    get configuration() {
+      return this._configuration;
+    }
 
-		renderLinks() {
-			const navLinks = this.shadowRoot.getElementById('shell-nav-links');
+    renderLinks() {
+      const navLinks = this.shadowRoot.getElementById('shell-nav-links');
 
-			this._configuration.apps.forEach(microAppConfig => {
-				const routes = microAppConfig.routes;
+      this._configuration.apps.forEach((microAppConfig) => {
+        const { routes } = microAppConfig;
 
-				routes.forEach(route => {
-					const listItem = document.createElement('li');
-					listItem.className = 'link-parent';
-					listItem.appendChild(document.createTextNode(route.name));
+        routes.forEach((route) => {
+          const listItem = document.createElement('li');
+          listItem.className = 'link-parent';
+          listItem.appendChild(document.createTextNode(route.name));
 
-					navLinks.appendChild(listItem);
+          navLinks.appendChild(listItem);
 
-					route.children.forEach(child => {
-						const childItem = document.createElement('li');
-						childItem.className = 'link-child';
-						const { name, path } = child;
-						const app = microAppConfig.componentName;
+          route.children.forEach((child) => {
+            const childItem = document.createElement('li');
+            childItem.className = 'link-child';
+            const { name, path } = child;
+            const app = microAppConfig.componentName;
 
-						childItem.appendChild(document.createTextNode(name));
-						childItem.addEventListener('click', this.listenerFactory({ path, app }));
-						navLinks.appendChild(childItem);
-					});
-				});
-			});
-		}
+            childItem.appendChild(document.createTextNode(name));
+            childItem.addEventListener('click', this.listenerFactory({ path, app }));
+            navLinks.appendChild(childItem);
+          });
+        });
+      });
+    }
 
-		listenerFactory(route) {
-			const rootElement = document.getElementById(this.configuration.containerId);
+    listenerFactory(route) {
+      const rootElement = document.getElementById(this.configuration.containerId);
 
-			return () => {
-				window.location.href = window.location.href + '#';
-				const pathname = `${route.path}`;
+      return () => {
+        window.location.href = `${window.location.href}#`;
+        const pathname = `${route.path}`;
 
-				if (history && history.pushState) {
-					history.pushState({}, pathname, pathname);
+        if (history && history.pushState) {
+          history.pushState({}, pathname, pathname);
 
-					renderer.render(rootElement, window.location.pathname, this.configuration);
-				}
+          renderer.render(rootElement, window.location.pathname, this.configuration);
+        }
 
-				this.dispatchRoute(route);
-			};
-		}
+        this.dispatchRoute(route);
+      };
+    }
 
-		dispatchRoute(route) {
-			document.dispatchEvent(new CustomEvent('routeChanged', { detail: { route } }));
-		}
-	}
+    dispatchRoute(route) {
+      document.dispatchEvent(new CustomEvent('routeChanged', { detail: { route } }));
+    }
+  },
 );
