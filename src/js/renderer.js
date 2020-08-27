@@ -1,11 +1,11 @@
 import { getMicroAppConfig, isElementEmpty, hasElementRenderedChild } from './utils';
 import { loadMicroApp } from './app-loader';
 
-export const render = (rootElement, pathname, configuration) => {
+const render = (rootElement, pathname, configuration) => {
   const microAppConfig = getMicroAppConfig(pathname, configuration);
 
   if (!rootElement || !pathname || !microAppConfig) {
-    return;
+    throw new Error('Root element, pathname or app configuration not provided');
   }
 
   return loadMicroApp(microAppConfig)
@@ -32,3 +32,5 @@ export const render = (rootElement, pathname, configuration) => {
       }
     });
 };
+
+export default render;

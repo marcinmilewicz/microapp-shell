@@ -1,7 +1,7 @@
 import './styles/main.scss';
 import './shell-header/header';
 
-import Microfrontendly from './js/microfrontendly';
+import Microfrontendly from './js';
 
 (function shell() {
   const container = document.body;

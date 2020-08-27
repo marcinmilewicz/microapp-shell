@@ -1,4 +1,4 @@
-import * as renderer from './renderer';
+import render from './renderer';
 import { ROUTE_CHANGED_EVENT_NAME } from './globals';
 
 const Microfrontendly = (configURI) => {
@@ -6,7 +6,7 @@ const Microfrontendly = (configURI) => {
     context.rootElement = document.createElement('div');
     context.rootElement.setAttribute('id', configuration.containerId);
     context.container.appendChild(context.rootElement);
-    renderer.render(context.rootElement, window.location.pathname, configuration);
+    render(context.rootElement, window.location.pathname, configuration);
   };
 
   const listenerFactory = (rootElement, configuration) => (route) => {
@@ -17,7 +17,7 @@ const Microfrontendly = (configURI) => {
       // eslint-disable-next-line no-restricted-globals
       history.pushState({}, pathname, pathname);
 
-      renderer.render(rootElement, window.location.pathname, configuration);
+      render(rootElement, window.location.pathname, configuration);
     }
   };
 
