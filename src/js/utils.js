@@ -1,7 +1,7 @@
 export const getMicroAppConfig = (pathname, configuration) => {
   const paths = pathname.split('/');
 
-  if (!paths || !paths[1]) return;
+  if (!paths || !paths[1]) return undefined;
 
   return configuration.apps.find((app) => app.componentName === paths[1]);
 };

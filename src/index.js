@@ -1,28 +1,22 @@
 import './styles/main.scss';
-import './js/shell-header/header';
+import './shell-header/header';
 
-import * as microAppRenderer from './js/renderer';
+import Microfrontendly from './js/microfrontendly';
 
 (function shell() {
-  const renderContainer = (configuration) => {
-    const rootElement = document.createElement('div');
-    rootElement.setAttribute('id', configuration.containerId);
-    document.body.appendChild(rootElement);
-    microAppRenderer.render(rootElement, window.location.pathname, configuration);
-  };
+  const container = document.body;
 
   const renderHeader = (configuration) => {
     const header = document.getElementById('shell-header');
     header.configuration = configuration;
-    document.body.appendChild(header);
     return header;
   };
 
-  fetch('assets/configuration.json')
-    .then((resp) => resp.json())
+  new Microfrontendly('assets/configuration.json')
+    .withContainer(document.body)
+    .render()
     .then((configuration) => {
-      const header = renderHeader(configuration);
-      renderContainer(configuration);
+      const header = renderHeader(configuration, container);
       header.renderLinks();
     });
 }());
